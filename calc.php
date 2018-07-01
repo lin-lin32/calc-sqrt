@@ -1,17 +1,16 @@
 <?php
 
-$jsonParams = file_get_contents('php://input');
-$data = json_decode($jsonParams, true);
-$a = $data['a'];
-$b = $data['b'];
-$c = $data['c'];
-//$a = 1;
-//$b = 55;
-//$c = 3;
+$a = isset($_POST['a']) ? $_POST['a'] : null;
+$b = isset($_POST['b']) ? $_POST['b'] : null;
+$c = isset($_POST['c']) ? $_POST['c'] : null;
 $res = array();
 
-if(json_last_error() !== JSON_ERROR_NONE) {
+header('Content-type: application/json');
+
+if($a == 0) {
     http_response_code(400);
+    echo json_encode(array('error' => '"a" can not be zero'));
+
     return;
 }
 
@@ -22,5 +21,4 @@ if($res['discr'] >= 0) {
     $res['x2'] = (-$b - sqrt($res['discr'])) / (2 * $a);
 }
 
-header('Content-type: application/json');
 echo json_encode($res);

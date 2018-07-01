@@ -50,6 +50,7 @@ $(function () {
 
         var res = '<div class="alert alert-danger">'
             + '<p class="form-control-static">Status: ' + jqXHR.status + ', ' + jqXHR.statusText + '</p>'
+            + (jqXHR.responseJSON && jqXHR.responseJSON.error ? ('<p class="form-control-static">Error: ' + jqXHR.responseJSON.error + '</p>') : '')
             + '</div>';
 
         renderRes(res);
@@ -70,8 +71,8 @@ $(function () {
         $.ajax({
             type: 'POST',
             url: 'calc.php',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
+            dataType: 'json',
+            data: data,
             success: handlerSuccess,
             error: handlerError
         });
